@@ -5,7 +5,7 @@ SAMMI Starter Pack gives you access to a very handy moderator command that allow
 
 ## Usage
 
-!command <operation> <command> <response>
+`!command <operation> <command> <response>`
 
 | Operation | Usage |
 | -------- | ----- |
