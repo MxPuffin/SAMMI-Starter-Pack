@@ -1,16 +1,30 @@
-# Commands
+# Settings
+## SAMMI Settings
+| Setting | Description |
+|---------|-------------|
+| Enable Advanced Commands | Enables some of the advanced extension commands I used to make this extension work, I figured I'd leave this in as an option incase people would like to use them. |
+## Extension Module Settings
+| Setting | Description |
+|---------|-------------|
+| Enable Commands| Enables the Command Module |
+| Enable Quotes | Enables the Quote Module |
+| Backfill new Quotes | Lets new quotes replace the position of deleted quotes. |
+| Enable Announcements| NYI |
+
+# Commands Module
 
 SAMMI Starter Pack gives you access to a very handy moderator command that allows mods/yourself to add commands on the fly. You can edit/delete/disable these commands from the `Commands` tab in the bridge.
 
 ## Usage
+Only Mods can add commands via chat. Commands parse most twitch commands, so be weary of that.
 
-!command <operation> <command> <response>
+!command `<operation>` `<command>` `<response>`
 
 | Operation | Usage |
 | -------- | ----- |
 | `ADD` | `!command add <command> <response>` |
 | `EDIT` | `!command edit <command> <new response>` |
-| `RENAME` | `!command rename <command> <new name>` |M
+| `RENAME` | `!command rename <command> <new name>` |
 | `REMOVE` | `!command remove <command>` |
 
 Eg. `!command add hello Hello, world!`
@@ -37,7 +51,7 @@ ${rand 1-100}
 | -------- | ---------- | ----- | ----------- |
 | 1>100 | N/A | `${1}` `${3}`| Gets the word at the specified index, returns `""` if nothing was found. |
 | sender | N/A | `${sender}` | Gets the name of the person who used the command. |
-| target - NYI | N/A | `${target}` | Use `${1}` for now. Validates the target mentioned exists. |
+| target | `none`<br>`.game`<br>`.login` | `${target}`<br>`${target.game}`<br>`${target.login}` | Fetches stream information about the target. Returns `""` if target does not exist. Target is specically pulled from the first parameter following a command. If you use target on its own, it will pull the users display name. |
 | rand | `100`, `50-100` | `${rand 100}` | Generates a random number up to the specified number, or between the range of `min-max`. Returns `""` if invalid. |
 | rand.list | `('a' 'b')` | `${rand.list('Value 1' 'Value 2' 'Value 3')}` | Retrieves a random value from the specified list of values provided. Values must be enclosed in apostrophes (`'`) |
 | count | Counter Variable | `${count cough}` | Gets the value of the counter, each time the counter is retrieved, it adds 1 to it.
@@ -54,26 +68,163 @@ Here are some practical examples of how you can use these arguments:
 
 **Output:** 
 ```plaintext
-<USER> is 57% cool! 
+!cool
+mxpuffin is 57% cool! 
 ```
-### Example 2: Counter
+### Example 2: Get Target information
+```plaintext
+!command add shoutout Please go follow ${target} they were last seen playing ${target.game} on their channel at twitch.tv/${target.login}
+```
+
+**Output**
+```plaintext
+!shoutout mxpuffin
+Please go follow mxpuffin they were last seen playing <game> over at twitch.tv/mxpuffin
+```
+### Example 3: Counter
 ```plaintext
 !command add sneeze Streammer has sneezed ${count sneeze} times!
 ```
 
 **Output:** 
 ```plaintext
+!sneeze
 Streamer has sneezed 31 times!
 ```
 ## Notes
 - This system was designed to make simple dynamic commands easier to add and manage.
 - For more advanced command logic, SAMMI itself provides additional functionality.
 
-# Quotes
+# Quotes Module
+
+SAMMI Start Pack has a basic quote system that lets users add quotes. When a quote is added, it saves a unique counting ID, Timestamp, User who created the quote, category and the quote itself.
+
+## Usage
+| Operation | Usage | Description |
+|-----------|-------|-------------|
+| !quoteadd | !quoteadd `<quote>` | Adds the quote after the command |
+| !quotedel | !quotedel `<quote id>` | [MOD] Removes the quote with the matching ID |
+| !quote | !quote | Retrieves a random quote from the quote list |
+| !quote `<id>` | `!quote 3`| Tries to get a quote by the matching ID |
+
+## Settings
+
+| Setting | Description |
+|---------|-------------|
+| Enable Quotes | Enables/Disables the quote system as a whole. |
+| Backfill new Quotes | If you have quotes `1, 2, 3, 4` and delete quote `3` you'll end up with `1, 2, 4` with back fill enabled when adding a new quote, it will add the new quote at position `3` instead of position `5` |
+
+# Announcements Modules
 
 Not yet implemented.
 
-# Announcements
+# SAMMI Extension Commands
 
-Not yet implemented.
+Due to the nature of Extension Commands, you will be required to use `wait until variable exists` in order to get the results from outputs
 
+## Other
+
+### [SSP]: Send Message
+
+Sends a chat message to both twitcn and YouTube. If you don't have a twitch or youtube account connected it won't try to send a message to that platform.
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| Chat Message | String | The message you wish to be sent to each platform |
+| Twitch Account | String | The Twitch account to send the message to (Leave blank for default) |
+| YouTube Account | String | The YouTube account to send the message to (Leave blank for first added YT Account) |
+
+## String Commands
+
+### [SSP] Format: String to snake_case
+
+Formats a string into snake_case (no spaces, all lowercase and no symbols)
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| Input | String | The string you want to convert into snake_case |
+| Output | String | The variable you wish to save the result to. |
+
+### [SSP] Format: Seconds to String
+
+Formats seconds into a readable string message. 
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| Seconds | Number | The seconds you want to convert to a string variable|
+| Is MS | Bool | Whether your input is in Milliseconds |
+| Unit | String | `Long`: 2 Hours, 1 Minute, 20 Seconds.<br>`Short`: 2h, 1m, 20s. <br>`Time`: 02:01:20 (truncates days/weeks/months/years) |
+| Output | String | The variable you wish to save the result to. |
+
+### [SSP] Format: Number to String
+
+Formats a number into a readable string message ie. `245000` becomes `245,000`
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| Seconds | Number | The seconds you want to convert to a string variable|
+| Separator | String | The character used to separate your number. |
+| Output | String | The variable you wish to save the result to. |
+
+## Cooldown Commands
+
+### [SSP]: Get/Set Cooldown
+
+Returns true or false if someone has a cooldown. If someone does not have a cooldown, it will automatically set a new cooldown. This command saves having to use 2 commands.
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| User ID | Number/String | The User ID of the user you want to get the cooldown of. You could theorhetically use anything here, like `'global'` if you wanna apply a global cooldown|
+| Group | String | The cooldown group, if empty, will use the current buttons ID |
+| Duration | Number | The amount of time you want to set for the cooldown. |
+| Time Unit | String | `Seconds` `Minutes` `Hours` `Days` |
+| Output | String | The variable you wish to save the result to. |
+| Output Seconds Left | Bool | Returns the amount of time remaining instead of true/false (returns 0 or negative numbers if cooldown is over) |
+
+
+### [SSP]: Get Cooldown
+
+Returns true if someone still has a cooldown. Returns false if the cooldown is over.
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| User ID | Number/String | The User ID of the user you want to get the cooldown of. You could theorhetically use anything here, like `'global'` if you wanna apply a global cooldown|
+| Group | String | The cooldown group, if empty, will use the current buttons ID |
+| Output | String | The variable you wish to save the result to. |
+| Output Seconds Left | Bool | Returns the amount of time remaining instead of true/false (returns 0 or negative numbers if cooldown is over) |
+
+### [SSP]: Set Cooldown
+
+Sets a cooldown to the specified user. It will set a cooldown regardless of if a user has a cooldown or not.
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| User ID | Number/String | The User ID of the user you want to apply a cooldown to. You could theorhetically use anything here, like `'global'` if you wanna apply a global cooldown|
+| Group | String | The cooldown group, if empty, will use the current buttons ID |
+| Duration | Number | The amount of time you want to set for the cooldown. |
+| Time Unit | String | `Seconds` `Minutes` `Hours` `Days` |
+
+## Advanced Commands
+
+### [SSP] CSV: Row to Object
+
+Takes a row from a CSV and returns an Object with all the values with headers as keys. Returns undefined if an invalid row is provided.
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| CSV Name | String | The name of a `loaded` CSV |
+| CSV Path | String | The file path of the CSV, you can use the relative file path of SAMMIs directory (files/my_data.csv) |
+| Row Name/Number | String/Number | Either the name of the row or number position. |
+| Output | String | The variable you wish to save the result to. |
+
+### [SSP] CSV: Row to Object
+
+Takes a CSV and returns an array with all the rows as an object. Will not return anything if the CSV doesnt exist.
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| CSV Name | String | The name of a `loaded` CSV |
+| CSV Path | String | The file path of the CSV, you can use the relative file path of SAMMIs directory (files/my_data.csv) |
+| Output | String | The variable you wish to save the result to. |
+
+The file path is required so SAMMI can cache the head of the CSV
