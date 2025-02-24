@@ -217,7 +217,7 @@ Takes a row from a CSV and returns an Object with all the values with headers as
 | Row Name/Number | String/Number | Either the name of the row or number position. |
 | Output | String | The variable you wish to save the result to. |
 
-### [SSP] CSV: Row to Object
+### [SSP] CSV: Parse to Array
 
 Takes a CSV and returns an array with all the rows as an object. Will not return anything if the CSV doesnt exist.
 
