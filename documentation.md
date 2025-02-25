@@ -10,6 +10,12 @@
 | Enable Quotes | Enables the Quote Module |
 | Backfill new Quotes | Lets new quotes replace the position of deleted quotes. |
 | Enable Announcements| NYI |
+| Enable Death Counter | Enables the !death/+/-/s command |
+| Enable Set Game Command | Enables the !setgame command |
+| Enable Set Title Command | Enables the !settitle command |
+| Enable Followage Command | Enables the !followage command |
+| Enable Watch Time | Enables the counting of users watchtime. |
+| Watch Time Interval | Default: 10 Minutes. How frequently watch time is calculated. Lower = more accurate but more processing.
 
 # Commands Module
 
