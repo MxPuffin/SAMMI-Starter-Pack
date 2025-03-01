@@ -8,14 +8,31 @@
 |---------|-------------|
 | Enable Commands| Enables the Command Module |
 | Enable Quotes | Enables the Quote Module |
+| Enable Announcements| Enables the Announcement Module |
 | Backfill new Quotes | Lets new quotes replace the position of deleted quotes. |
-| Enable Announcements| NYI |
+| Quote Message | The message that gets sent when someone does `!quote` you can use `/$id$/`, `/$quote$/`, `/$category$/`, `/$user$/` and `/$timestamp$/`|
 | Enable Death Counter | Enables the !death/+/-/s command |
-| Enable Set Game Command | Enables the !setgame command |
-| Enable Set Title Command | Enables the !settitle command |
+| Enable Set Game Command | [MOD ONLY] Enables the !setgame command |
+| Enable Set Title Command | [MOD ONLY] Enables the !settitle command |
 | Enable Followage Command | Enables the !followage command |
 | Enable Watch Time | Enables the counting of users watchtime. |
 | Watch Time Interval | Default: 10 Minutes. How frequently watch time is calculated. Lower = more accurate but more processing.
+
+# Basic Chat Commands
+
+## Usage
+
+Parameters wrapped in `( )` are optional and not needed. If they are not provided. They will target the person who used the command.
+
+Paramaters wrapped in `{ }` are required and will not function if not provided.
+
+| Operation | Usage | Description |
+|-----------|-------|-------------|
+| `Followage` | `!followage (user)` | Sends a chat message with how long the user has followed. |
+| `Watch Time` | `!watchtime (user)` | Sends a chat message with how long a user has watched the stream for. Watch time is since you added the extension. |
+| `Set Game` | `!setgame {game}` | [MOD ONLY] This command will update your game in Twitch and give an error message if it fails. |
+| `Set Title` | `!settitle {title}` | [MOD ONLY] This command will update your stream title and gives an error message if it fails. |
+| `Death` | `!deaths`<br>`!death+`<br>`!death-` | Sends a chat message with how many deaths are recorded in your set category<br>[MOD ONLY] Adds a death to the counter for your current category<br>[MOD ONLY] Removes a death from the counter for your current category. |
 
 # Commands Module
 
@@ -27,7 +44,7 @@ Only Mods can add commands via chat. Commands parse most twitch commands, so be 
 !command `<operation>` `<command>` `<response>`
 
 | Operation | Usage |
-| -------- | ----- |
+|-----------|-------|
 | `ADD` | `!command add <command> <response>` |
 | `EDIT` | `!command edit <command> <new response>` |
 | `RENAME` | `!command rename <command> <new name>` |
@@ -103,7 +120,7 @@ Streamer has sneezed 31 times!
 
 # Quotes Module
 
-SAMMI Start Pack has a basic quote system that lets users add quotes. When a quote is added, it saves a unique counting ID, Timestamp, User who created the quote, category and the quote itself.
+SAMMI Starter Pack has a basic quote system that lets users add quotes. When a quote is added, it saves a unique counting ID, Timestamp, User who created the quote, category and the quote itself.
 
 ## Usage
 | Operation | Usage | Description |
@@ -119,10 +136,25 @@ SAMMI Start Pack has a basic quote system that lets users add quotes. When a quo
 |---------|-------------|
 | Enable Quotes | Enables/Disables the quote system as a whole. |
 | Backfill new Quotes | If you have quotes `1, 2, 3, 4` and delete quote `3` you'll end up with `1, 2, 4` with back fill enabled when adding a new quote, it will add the new quote at position `3` instead of position `5` |
+| Quote Message | The message that gets sent when someone does `!quote` you can use `/$id$/`, `/$quote$/`, `/$category$/`, `/$user$/` and `/$timestamp$/`|
 
 # Announcements Modules
 
-Not yet implemented.
+SAMMI Starter Pack has a unique announcement system, similar to that of Stream Elements bot timers. You can add multiple groups which interact independantly of each other.
+
+## Bridge UI 
+
+| Field | Description |
+|-------|-------------|
+| Enabled | Whether or not this group is enabled, disabling will reset the timer, but it will remember the last message it sent. |
+| Group Name | The name representing the group of responses. Each group has to have a unique name and will function independantly from other groups.
+| Responses | A list of responses that will be sent once both `Interval` and `Chat Lines` conditions are met. Responses are sent in the order they are shown unless `Randomise Order` is checked. |
+| Randomise Order | This will randomise the order that messages get sent. They will exhaust all other responses before repeating. |
+| ( X ) | Delete button for field its next to. You will be given a confirmation popup |
+| ( + ) | Adds a new response field. It cannot be left blank. |
+
+You must hit `SAVE` in order to confirm all these changes. If you refresh or click off the table row, it will close the drawer form and you will lose any information you have typed into fields, so be sure to hit `SAVE`
+
 
 # SAMMI Extension Commands
 
