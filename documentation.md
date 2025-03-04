@@ -11,7 +11,7 @@
 | Enable Announcements| Enables the Announcement Module |
 | Backfill new Quotes | Lets new quotes replace the position of deleted quotes. |
 | Quote Message | The message that gets sent when someone does `!quote` you can use `/$id$/`, `/$quote$/`, `/$category$/`, `/$user$/` and `/$timestamp$/`|
-| Bridge Message Interval | The amount of messages that get sent to the bridge are only sent after this specified amount of time. So after 5 seconds, it will send the batch of messages sent to the bridge. (0) to disable. |
+| Bridge Message Interval | The amount of time that has to pass before SAMMI sends message count to the bridge. This is just so SAMMI isn't spamming your bridge everytime a message is sent (It probably wont matter but I like to save on processing). (0) to disable. |
 | Enable Death Counter | Enables the !death/+/-/s command |
 | Enable Set Game Command | [MOD ONLY] Enables the !setgame command |
 | Enable Set Title Command | [MOD ONLY] Enables the !settitle command |
