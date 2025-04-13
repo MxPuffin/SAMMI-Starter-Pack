@@ -149,8 +149,9 @@ SAMMI Starter Pack has a unique announcement system, similar to that of Stream E
 |-------|-------------|
 | Enabled | Whether or not this group is enabled, disabling will reset the timer, but it will remember the last message it sent. |
 | Group Name | The name representing the group of responses. Each group has to have a unique name and will function independantly from other groups.
-| Responses | A list of responses that will be sent once both `Interval` and `Chat Lines` conditions are met. Responses are sent in the order they are shown unless `Randomise Order` is checked. |
 | Randomise Order | This will randomise the order that messages get sent. They will exhaust all other responses before repeating. |
+| Responses | A list of responses that will be sent once both `Interval` and `Chat Lines` conditions are met. Responses are sent in the order they are shown unless `Randomise Order` is checked. |
+| Trigger Button | If enabled, SAMMI will trigger a button that matches the Button ID of the Response Text instead of sending a chat message. This gives you flexibility to have more dynamic chat messages, alongside static messages. |
 | ( X ) | Delete button for field its next to. You will be given a confirmation popup |
 | ( + ) | Adds a new response field. It cannot be left blank. |
 
@@ -172,6 +173,17 @@ Sends a chat message to both twitcn and YouTube. If you don't have a twitch or y
 | Chat Message | String | The message you wish to be sent to each platform |
 | Twitch Account | String | The Twitch account to send the message to (Leave blank for default) |
 | YouTube Account | String | The YouTube account to send the message to (Leave blank for first added YT Account) |
+
+### [SSP]: Get Valid Subscriber
+
+Safetly gets the Subscription Status of a User and returns True or False if the user matches a criteria. You can check if the user is Tier 1, Tier 2 or Tier 3. You can do an exact match or a minimum match. Result is Cached so you're not making requests to Twitches API every check.
+
+| Box Name | Type | Description |
+|----------|------|-------------|
+| User ID | String | The ID of the User you want to validate. |
+| Tier | String | The Tier you want to check for. |
+| Strict | Bool | If enabled, Users Tier must match exactly. |
+| Output | String | The variable you wish to save the result to. |
 
 ## String Commands
 
